@@ -4,7 +4,7 @@ This is a Prometheus exporter for [CAKE-autorate](https://github.com/lynxthecat/
 
 [GitHub](https://github.com/bairhys/prometheus-cake-autorate-exporter)
 
-[Grafana Dashboard](https://grafana.com/grafana/dashboards/18597/)
+[Grafana Dashboard](https://grafana.com/grafana/dashboards/18597)
 
 ![Grafana](https://raw.githubusercontent.com/bairhys/prometheus-cake-autorate-exporter/main/grafana.png)
 
@@ -251,6 +251,6 @@ If you don't already have Grafana set up, setup Grafana to run on your server
   - Click `Save and Test` to check if connected
 - Go to [http://your-grafana-ip:3000/dashboards](http://your-grafana-ip:3000/dashboards)
   - New -> Import
-  - Enter in `Import via grafana.com`: `18597` (id can be found at [Grafana Dashboard](https://grafana.com/grafana/dashboards/18597/)) and click Load
+  - Enter in `Import via grafana.com`: `18597` (id can be found at [Grafana Dashboard](https://grafana.com/grafana/dashboards/18597)) and click Load
   - Set the datasource as Prometheus instance set up before then click Import
 - Should now be able to see CAKE Autorate time series metrics in the Grafana dashboard
