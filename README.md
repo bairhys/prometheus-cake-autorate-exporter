@@ -174,8 +174,7 @@ cake_autorate_cake_ul_rate_bits_per_second 4e+06
 5. Setup service
 
 ```bash
-cd /root
-wget https://raw.githubusercontent.com/bairhys/prometheus-cake-autorate-exporter/main/prometheus-node-exporter-cake-autorate
+wget -P /etc/init.d/ https://raw.githubusercontent.com/bairhys/prometheus-cake-autorate-exporter/main/prometheus-node-exporter-cake-autorate
 ```
 
 6. Enable and start service
