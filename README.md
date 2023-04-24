@@ -2,38 +2,40 @@
 
 This is a Prometheus exporter for [CAKE-autorate](https://github.com/lynxthecat/cake-autorate/) stats.
 
-[GitHub](https://github.com/bairhys/)
+[GitHub](https://github.com/bairhys/prometheus-cake-autorate-exporter)
 
 [Grafana Dashboard](https://grafana.com/grafana/dashboards/18597/)
 
-![Grafana](https://raw.githubusercontent.com/bairhys/)
+![Grafana](https://raw.githubusercontent.com/bairhys/prometheus-cake-autorate-exporter/main/grafana.png)
 
 ## Run the exporter on an OpenWRT router
+
+Once [CAKE-autorate](https://github.com/lynxthecat/cake-autorate/) is running, to setup this exporter
 
 1. Install `python3` and `python3-pip`
 
 ```bash
-   opkg update
-   opkg install python3 python3-pip
+opkg update
+opkg install python3 python3-pip
 ```
 
 2. Install `prometheus-client`
 
 ```bash
-   pip install prometheus-client
+pip install prometheus-client
 ```
 
 3. Download the exporter
    
 ```bash
-   cd /root
-   wget github....
+cd /root
+wget https://raw.githubusercontent.com/bairhys/prometheus-cake-autorate-exporter/main/prometheus_cake_autorate_exporter.py
 ```
 
 4. Start exporter manually
 
 ```bash
-    python prometheus_cake_autorate_exporter.py
+python prometheus_cake_autorate_exporter.py
 ```
 
 5. Test to determine if metrics working. In a browser, try accessing [http://192.168.1.1:9101/](http://192.168.1.1:9101/), should see raw metrics like below
@@ -172,18 +174,18 @@ CAKE_UL_RATE 4e+06
 5. Setup service
 
 ```bash
-   cd /root
-   wget github....
+cd /root
+wget https://raw.githubusercontent.com/bairhys/prometheus-cake-autorate-exporter/main/prometheus-node-exporter-cake-autorate
 ```
 
-5. Enable and start service
+6. Enable and start service
 
 ```bash
-   service enable prometheus-node-exporter-cake-autorate
-   service start prometheus-node-exporter-cake-autorate
+service enable prometheus-node-exporter-cake-autorate
+service start prometheus-node-exporter-cake-autorate
 ```
 
-6. Test to determine if metrics working with service. In a browser, try accessing [http://192.168.1.1:9101/](http://192.168.1.1:9101/), should see raw metrics again like above
+7. Test to determine if metrics working with service. In a browser, try accessing [http://192.168.1.1:9101/](http://192.168.1.1:9101/), should see raw metrics again like above
 
 ### Setup Prometheus
 
@@ -230,7 +232,7 @@ To see if Prometheus is scraping the exporter, go to Prometheus targets page [ht
 
 ### Setup Grafana
 
-If you don't already have Grafana set up, 
+If you don't already have Grafana set up, setup Grafana to run on your server
 
 - run Grafana
 
