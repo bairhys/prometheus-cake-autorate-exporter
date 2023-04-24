@@ -38,7 +38,7 @@ wget https://raw.githubusercontent.com/bairhys/prometheus-cake-autorate-exporter
 python prometheus_cake_autorate_exporter.py
 ```
 
-5. Test to determine if metrics working. In a browser, try accessing [http://192.168.1.1:9101/](http://192.168.1.1:9101/), should see raw metrics like below
+5. Test to determine if metrics accessible. In a browser, try accessing [http://192.168.1.1:9101/](http://192.168.1.1:9101/), should see raw metrics like below
 
 ```yaml
 # HELP python_gc_objects_collected_total Objects collected during gc
@@ -184,7 +184,7 @@ service enable prometheus-node-exporter-cake-autorate
 service start prometheus-node-exporter-cake-autorate
 ```
 
-7. Test to determine if metrics working with service. In a browser, try accessing [http://192.168.1.1:9101/](http://192.168.1.1:9101/), should see raw metrics again like above
+7. Test to determine if metrics accessible as a service. In a browser, try accessing [http://192.168.1.1:9101/](http://192.168.1.1:9101/), should see raw metrics again like above
 
 ### Setup Prometheus
 
