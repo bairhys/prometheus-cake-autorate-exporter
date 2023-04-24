@@ -43,8 +43,8 @@ python prometheus_cake_autorate_exporter.py
 ```yaml
 # HELP python_gc_objects_collected_total Objects collected during gc
 # TYPE python_gc_objects_collected_total counter
-python_gc_objects_collected_total{generation="0"} 102.0
-python_gc_objects_collected_total{generation="1"} 289.0
+python_gc_objects_collected_total{generation="0"} 391.0
+python_gc_objects_collected_total{generation="1"} 7.0
 python_gc_objects_collected_total{generation="2"} 0.0
 # HELP python_gc_objects_uncollectable_total Uncollectable object found during GC
 # TYPE python_gc_objects_uncollectable_total counter
@@ -53,7 +53,7 @@ python_gc_objects_uncollectable_total{generation="1"} 0.0
 python_gc_objects_uncollectable_total{generation="2"} 0.0
 # HELP python_gc_collections_total Number of times this generation was collected
 # TYPE python_gc_collections_total counter
-python_gc_collections_total{generation="0"} 42.0
+python_gc_collections_total{generation="0"} 41.0
 python_gc_collections_total{generation="1"} 3.0
 python_gc_collections_total{generation="2"} 0.0
 # HELP python_info Python platform information
@@ -64,109 +64,109 @@ python_info{implementation="CPython",major="3",minor="10",patchlevel="9",version
 process_virtual_memory_bytes 2.3035904e+07
 # HELP process_resident_memory_bytes Resident memory size in bytes.
 # TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 1.8583552e+07
+process_resident_memory_bytes 1.8558976e+07
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds 1.68230686708e+09
+process_start_time_seconds 1.68233547037e+09
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total counter
-process_cpu_seconds_total 6.0
+process_cpu_seconds_total 1.31
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
-process_open_fds 7.0
+process_open_fds 6.0
 # HELP process_max_fds Maximum number of open file descriptors.
 # TYPE process_max_fds gauge
 process_max_fds 1024.0
-# HELP DATA_HEADER DATA_HEADER
-# TYPE DATA_HEADER gauge
-DATA_HEADER{DATA_HEADER="DATA"} 1.0
-DATA_HEADER{DATA_HEADER="LOAD"} 0.0
-DATA_HEADER{DATA_HEADER="SHAPER"} 0.0
-# HELP LOG_TIMESTAMP LOG_TIMESTAMP
-# TYPE LOG_TIMESTAMP gauge
-LOG_TIMESTAMP 1.682307438446743e+09
-# HELP PROC_TIME_US PROC_TIME_US
-# TYPE PROC_TIME_US gauge
-PROC_TIME_US 1.682307438446161e+09
-# HELP DL_ACHIEVED_RATE DL_ACHIEVED_RATE
-# TYPE DL_ACHIEVED_RATE gauge
-DL_ACHIEVED_RATE 757.0
-# HELP UL_ACHIEVED_RATE UL_ACHIEVED_RATE
-# TYPE UL_ACHIEVED_RATE gauge
-UL_ACHIEVED_RATE 127.0
-# HELP DL_LOAD_PERCENT DL_LOAD_PERCENT
-# TYPE DL_LOAD_PERCENT gauge
-DL_LOAD_PERCENT 0.0
-# HELP UL_LOAD_PERCENT UL_LOAD_PERCENT
-# TYPE UL_LOAD_PERCENT gauge
-UL_LOAD_PERCENT 0.0
-# HELP RTT_TIMESTAMP RTT_TIMESTAMP
-# TYPE RTT_TIMESTAMP gauge
-RTT_TIMESTAMP 1.68230743843855e+09
-# HELP REFLECTOR_info REFLECTOR
-# TYPE REFLECTOR_info gauge
-REFLECTOR_info{address=" 1.0.0.1"} 1.0
-# HELP SEQUENCE SEQUENCE
-# TYPE SEQUENCE gauge
-SEQUENCE 4840.0
-# HELP DL_OWD_BASELINE DL_OWD_BASELINE
-# TYPE DL_OWD_BASELINE gauge
-DL_OWD_BASELINE 0.010209
-# HELP DL_OWD_US DL_OWD_US
-# TYPE DL_OWD_US gauge
-DL_OWD_US 0.01205
-# HELP DL_OWD_DELTA_EWMA_US DL_OWD_DELTA_EWMA_US
-# TYPE DL_OWD_DELTA_EWMA_US gauge
-DL_OWD_DELTA_EWMA_US 0.00496
-# HELP DL_OWD_DELTA_US DL_OWD_DELTA_US
-# TYPE DL_OWD_DELTA_US gauge
-DL_OWD_DELTA_US 0.001841
-# HELP DL_ADJ_DELAY_THR DL_ADJ_DELAY_THR
-# TYPE DL_ADJ_DELAY_THR gauge
-DL_ADJ_DELAY_THR 0.030016
-# HELP UL_OWD_BASELINE UL_OWD_BASELINE
-# TYPE UL_OWD_BASELINE gauge
-UL_OWD_BASELINE 0.010209
-# HELP UL_OWD_US UL_OWD_US
-# TYPE UL_OWD_US gauge
-UL_OWD_US 0.01205
-# HELP UL_OWD_DELTA_EWMA_US UL_OWD_DELTA_EWMA_US
-# TYPE UL_OWD_DELTA_EWMA_US gauge
-UL_OWD_DELTA_EWMA_US 0.00496
-# HELP UL_OWD_DELTA_US UL_OWD_DELTA_US
-# TYPE UL_OWD_DELTA_US gauge
-UL_OWD_DELTA_US 0.001841
-# HELP UL_ADJ_DELAY_THR UL_ADJ_DELAY_THR
-# TYPE UL_ADJ_DELAY_THR gauge
-UL_ADJ_DELAY_THR 0.030375
-# HELP SUM_DL_DELAYS SUM_DL_DELAYS
-# TYPE SUM_DL_DELAYS gauge
-SUM_DL_DELAYS 0.0
-# HELP SUM_UL_DELAYS SUM_UL_DELAYS
-# TYPE SUM_UL_DELAYS gauge
-SUM_UL_DELAYS 0.0
-# HELP DL_LOAD_CONDITION DL_LOAD_CONDITION
-# TYPE DL_LOAD_CONDITION gauge
-DL_LOAD_CONDITION{DL_LOAD_CONDITION="dl_idle"} 1.0
-DL_LOAD_CONDITION{DL_LOAD_CONDITION="dl_idle_bb"} 0.0
-DL_LOAD_CONDITION{DL_LOAD_CONDITION="dl_low"} 0.0
-DL_LOAD_CONDITION{DL_LOAD_CONDITION="dl_low_bb"} 0.0
-DL_LOAD_CONDITION{DL_LOAD_CONDITION="dl_high"} 0.0
-DL_LOAD_CONDITION{DL_LOAD_CONDITION="dl_high_bb"} 0.0
-# HELP UL_LOAD_CONDITION UL_LOAD_CONDITION
-# TYPE UL_LOAD_CONDITION gauge
-UL_LOAD_CONDITION{UL_LOAD_CONDITION="ul_idle"} 1.0
-UL_LOAD_CONDITION{UL_LOAD_CONDITION="ul_idle_bb"} 0.0
-UL_LOAD_CONDITION{UL_LOAD_CONDITION="ul_low"} 0.0
-UL_LOAD_CONDITION{UL_LOAD_CONDITION="ul_low_bb"} 0.0
-UL_LOAD_CONDITION{UL_LOAD_CONDITION="ul_high"} 0.0
-UL_LOAD_CONDITION{UL_LOAD_CONDITION="ul_high_bb"} 0.0
-# HELP CAKE_DL_RATE CAKE_DL_RATE
-# TYPE CAKE_DL_RATE gauge
-CAKE_DL_RATE 9.1023e+07
-# HELP CAKE_UL_RATE CAKE_UL_RATE
-# TYPE CAKE_UL_RATE gauge
-CAKE_UL_RATE 4e+06
+# HELP cake_autorate_data_header_enum Log Type
+# TYPE cake_autorate_data_header_enum gauge
+cake_autorate_data_header_enum{cake_autorate_data_header_enum="DATA"} 1.0
+cake_autorate_data_header_enum{cake_autorate_data_header_enum="LOAD"} 0.0
+cake_autorate_data_header_enum{cake_autorate_data_header_enum="SHAPER"} 0.0
+# HELP cake_autorate_log_timestamp_seconds Log timestamp (seconds)
+# TYPE cake_autorate_log_timestamp_seconds gauge
+cake_autorate_log_timestamp_seconds 1.682335481435921e+09
+# HELP cake_autorate_proc_timestamp_seconds Process time (seconds)
+# TYPE cake_autorate_proc_timestamp_seconds gauge
+cake_autorate_proc_timestamp_seconds 1.68233548143526e+09
+# HELP cake_autorate_dl_achieved_rate_bits_per_second Measured download rate (bits/second)
+# TYPE cake_autorate_dl_achieved_rate_bits_per_second gauge
+cake_autorate_dl_achieved_rate_bits_per_second 1.7627e+07
+# HELP cake_autorate_ul_achieved_rate_bits_per_second Measured upload rate (bits/second)
+# TYPE cake_autorate_ul_achieved_rate_bits_per_second gauge
+cake_autorate_ul_achieved_rate_bits_per_second 162000.0
+# HELP cake_autorate_dl_load_percent Download load (percent)
+# TYPE cake_autorate_dl_load_percent gauge
+cake_autorate_dl_load_percent 47.0
+# HELP cake_autorate_ul_load_percent Upload load (percent)
+# TYPE cake_autorate_ul_load_percent gauge
+cake_autorate_ul_load_percent 4.0
+# HELP cake_autorate_rtt_timestamp_seconds Round Trip Time Timestamp (seconds)
+# TYPE cake_autorate_rtt_timestamp_seconds gauge
+cake_autorate_rtt_timestamp_seconds 1.68233548141966e+09
+# HELP cake_autorate_reflector_info Reflector target address
+# TYPE cake_autorate_reflector_info gauge
+cake_autorate_reflector_info{address="1.1.1.1"} 1.0
+# HELP cake_autorate_sequence Sequence
+# TYPE cake_autorate_sequence gauge
+cake_autorate_sequence 2315.0
+# HELP cake_autorate_dl_owd_baseline_seconds (seconds)
+# TYPE cake_autorate_dl_owd_baseline_seconds gauge
+cake_autorate_dl_owd_baseline_seconds 0.008806
+# HELP cake_autorate_dl_owd_seconds (seconds)
+# TYPE cake_autorate_dl_owd_seconds gauge
+cake_autorate_dl_owd_seconds 0.0118
+# HELP cake_autorate_dl_owd_delta_ewma_seconds (seconds)
+# TYPE cake_autorate_dl_owd_delta_ewma_seconds gauge
+cake_autorate_dl_owd_delta_ewma_seconds 0.00487
+# HELP cake_autorate_dl_owd_delta_seconds (seconds)
+# TYPE cake_autorate_dl_owd_delta_seconds gauge
+cake_autorate_dl_owd_delta_seconds 0.002993
+# HELP cake_autorate_dl_adj_delay_thr_seconds (seconds)
+# TYPE cake_autorate_dl_adj_delay_thr_seconds gauge
+cake_autorate_dl_adj_delay_thr_seconds 0.03004
+# HELP cake_autorate_ul_owd_baseline_seconds (seconds)
+# TYPE cake_autorate_ul_owd_baseline_seconds gauge
+cake_autorate_ul_owd_baseline_seconds 0.008806
+# HELP cake_autorate_ul_owd_seconds (seconds)
+# TYPE cake_autorate_ul_owd_seconds gauge
+cake_autorate_ul_owd_seconds 0.0118
+# HELP cake_autorate_ul_owd_delta_ewma_seconds (seconds)
+# TYPE cake_autorate_ul_owd_delta_ewma_seconds gauge
+cake_autorate_ul_owd_delta_ewma_seconds 0.00487
+# HELP cake_autorate_ul_owd_delta_seconds (seconds)
+# TYPE cake_autorate_ul_owd_delta_seconds gauge
+cake_autorate_ul_owd_delta_seconds 0.002993
+# HELP cake_autorate_ul_adj_delay_thr_seconds (seconds)
+# TYPE cake_autorate_ul_adj_delay_thr_seconds gauge
+cake_autorate_ul_adj_delay_thr_seconds 0.030375
+# HELP cake_autorate_sum_dl_delays_seconds Total download delays (seconds)
+# TYPE cake_autorate_sum_dl_delays_seconds gauge
+cake_autorate_sum_dl_delays_seconds 0.0
+# HELP cake_autorate_sum_ul_delays_seconds Total upload delays (seconds)
+# TYPE cake_autorate_sum_ul_delays_seconds gauge
+cake_autorate_sum_ul_delays_seconds 0.0
+# HELP cake_autorate_dl_load_condition_enum Download state
+# TYPE cake_autorate_dl_load_condition_enum gauge
+cake_autorate_dl_load_condition_enum{cake_autorate_dl_load_condition_enum="dl_idle"} 0.0
+cake_autorate_dl_load_condition_enum{cake_autorate_dl_load_condition_enum="dl_idle_bb"} 0.0
+cake_autorate_dl_load_condition_enum{cake_autorate_dl_load_condition_enum="dl_low"} 1.0
+cake_autorate_dl_load_condition_enum{cake_autorate_dl_load_condition_enum="dl_low_bb"} 0.0
+cake_autorate_dl_load_condition_enum{cake_autorate_dl_load_condition_enum="dl_high"} 0.0
+cake_autorate_dl_load_condition_enum{cake_autorate_dl_load_condition_enum="dl_high_bb"} 0.0
+# HELP cake_autorate_ul_load_condition_enum Upload state
+# TYPE cake_autorate_ul_load_condition_enum gauge
+cake_autorate_ul_load_condition_enum{cake_autorate_ul_load_condition_enum="ul_idle"} 1.0
+cake_autorate_ul_load_condition_enum{cake_autorate_ul_load_condition_enum="ul_idle_bb"} 0.0
+cake_autorate_ul_load_condition_enum{cake_autorate_ul_load_condition_enum="ul_low"} 0.0
+cake_autorate_ul_load_condition_enum{cake_autorate_ul_load_condition_enum="ul_low_bb"} 0.0
+cake_autorate_ul_load_condition_enum{cake_autorate_ul_load_condition_enum="ul_high"} 0.0
+cake_autorate_ul_load_condition_enum{cake_autorate_ul_load_condition_enum="ul_high_bb"} 0.0
+# HELP cake_autorate_cake_dl_rate_bits_per_second CAKE download rate (bits/sec)
+# TYPE cake_autorate_cake_dl_rate_bits_per_second gauge
+cake_autorate_cake_dl_rate_bits_per_second 3.6641e+07
+# HELP cake_autorate_cake_ul_rate_bits_per_second CAKE upload rate (bits/sec)
+# TYPE cake_autorate_cake_ul_rate_bits_per_second gauge
+cake_autorate_cake_ul_rate_bits_per_second 4e+06
 ```
 
 6. Stop running exporter manually (Ctrl+C)
