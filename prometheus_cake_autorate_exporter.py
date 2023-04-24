@@ -57,7 +57,7 @@ def readLineData(data):
     DL_LOAD_PERCENT.set(data[6])
     UL_LOAD_PERCENT.set(data[7])
     RTT_TIMESTAMP.set(data[8])
-    REFLECTOR.info({'address': data[9]})
+    REFLECTOR.info({'address': data[9].replace(' ', '')})
     SEQUENCE.set(data[10])
 
     DL_OWD_BASELINE.set(float(data[11])/US)
