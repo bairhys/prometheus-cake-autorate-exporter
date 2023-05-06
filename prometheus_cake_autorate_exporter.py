@@ -19,23 +19,23 @@ DL_LOAD_PERCENT = Gauge('cake_autorate_dl_load_percent', 'Download load (percent
 UL_LOAD_PERCENT = Gauge('cake_autorate_ul_load_percent', 'Upload load (percent)') # [7]
 
 RTT_TIMESTAMP = Gauge('cake_autorate_rtt_timestamp_seconds', 'Round Trip Time Timestamp (seconds)') # [8]
-REFLECTOR = Info('cake_autorate_reflector','Reflector target address') # [9]
-SEQUENCE =  Gauge('cake_autorate_sequence','Sequence') # [10]
+REFLECTOR = Info('cake_autorate_reflector','Reflector target address', ['reflector']) # [9]
+SEQUENCE =  Gauge('cake_autorate_sequence','Sequence', ['reflector']) # [10]
 
-DL_OWD_BASELINE = Gauge('cake_autorate_dl_owd_baseline_seconds', '(seconds)') # [11]
-DL_OWD = Gauge('cake_autorate_dl_owd_seconds', '(seconds)') # [12]
-DL_OWD_DELTA_EWMA = Gauge('cake_autorate_dl_owd_delta_ewma_seconds', '(seconds)') # [13]
-DL_OWD_DELTA = Gauge('cake_autorate_dl_owd_delta_seconds', '(seconds)') # [14]
-DL_ADJ_DELAY_THR = Gauge('cake_autorate_dl_adj_delay_thr_seconds', '(seconds)') # [15]
+DL_OWD_BASELINE = Gauge('cake_autorate_dl_owd_baseline_seconds', '(seconds)', ['reflector']) # [11]
+DL_OWD = Gauge('cake_autorate_dl_owd_seconds', '(seconds)', ['reflector']) # [12]
+DL_OWD_DELTA_EWMA = Gauge('cake_autorate_dl_owd_delta_ewma_seconds', '(seconds)', ['reflector']) # [13]
+DL_OWD_DELTA = Gauge('cake_autorate_dl_owd_delta_seconds', '(seconds)', ['reflector']) # [14]
+DL_ADJ_DELAY_THR = Gauge('cake_autorate_dl_adj_delay_thr_seconds', '(seconds)', ['reflector']) # [15]
 
-UL_OWD_BASELINE = Gauge('cake_autorate_ul_owd_baseline_seconds', '(seconds)') # [16]
-UL_OWD = Gauge('cake_autorate_ul_owd_seconds', '(seconds)') # [17]
-UL_OWD_DELTA_EWMA = Gauge('cake_autorate_ul_owd_delta_ewma_seconds', '(seconds)') # [18]
-UL_OWD_DELTA = Gauge('cake_autorate_ul_owd_delta_seconds', '(seconds)') # [19]
-UL_ADJ_DELAY_THR = Gauge('cake_autorate_ul_adj_delay_thr_seconds', '(seconds)') # [20]
+UL_OWD_BASELINE = Gauge('cake_autorate_ul_owd_baseline_seconds', '(seconds)', ['reflector']) # [16]
+UL_OWD = Gauge('cake_autorate_ul_owd_seconds', '(seconds)', ['reflector']) # [17]
+UL_OWD_DELTA_EWMA = Gauge('cake_autorate_ul_owd_delta_ewma_seconds', '(seconds)', ['reflector']) # [18]
+UL_OWD_DELTA = Gauge('cake_autorate_ul_owd_delta_seconds', '(seconds)', ['reflector']) # [19]
+UL_ADJ_DELAY_THR = Gauge('cake_autorate_ul_adj_delay_thr_seconds', '(seconds)', ['reflector']) # [20]
 
-SUM_DL_DELAYS = Gauge('cake_autorate_sum_dl_delays_seconds', 'Total download delays (seconds)') # [21]
-SUM_UL_DELAYS = Gauge('cake_autorate_sum_ul_delays_seconds', 'Total upload delays (seconds)') # [22]
+SUM_DL_DELAYS = Gauge('cake_autorate_sum_dl_delays_seconds', 'Total download delays (seconds)', ['reflector']) # [21]
+SUM_UL_DELAYS = Gauge('cake_autorate_sum_ul_delays_seconds', 'Total upload delays (seconds)', ['reflector']) # [22]
 
 DL_LOAD_CONDITION = Enum('cake_autorate_dl_load_condition_enum', 'Download state', states=['dl_idle', 'dl_idle_bb',  'dl_low', 'dl_low_bb', 'dl_high', 'dl_high_bb']) # [23]
 UL_LOAD_CONDITION = Enum('cake_autorate_ul_load_condition_enum', 'Upload state', states=['ul_idle', 'ul_idle_bb',  'ul_low', 'ul_low_bb', 'ul_high', 'ul_high_bb']) # [24]
@@ -48,6 +48,7 @@ US = 1000000.0 # number of microseconds in a second
 
 
 def readLineData(data):
+    reflector = data[9].replace(' ', '')
     DATA_HEADER.state(data[0].replace(' ', ''))
     # LOG_DATETIME.info({'version': '1.2.3', 'buildhost': 'foo@bar'})
     LOG_TIMESTAMP.set(data[2])
@@ -57,23 +58,23 @@ def readLineData(data):
     DL_LOAD_PERCENT.set(data[6])
     UL_LOAD_PERCENT.set(data[7])
     RTT_TIMESTAMP.set(data[8])
-    REFLECTOR.info({'address': data[9].replace(' ', '')})
-    SEQUENCE.set(data[10])
+    REFLECTOR.labels(reflector).info({'address': reflector})
+    SEQUENCE.labels(reflector).set(data[10])
 
-    DL_OWD_BASELINE.set(float(data[11])/US)
-    DL_OWD.set(float(data[12])/US)
-    DL_OWD_DELTA_EWMA.set(float(data[13])/US)
-    DL_OWD_DELTA.set(float(data[14])/US)
-    DL_ADJ_DELAY_THR.set(float(data[15])/US)
+    DL_OWD_BASELINE.labels(reflector).set(float(data[11])/US)
+    DL_OWD.labels(reflector).set(float(data[12])/US)
+    DL_OWD_DELTA_EWMA.labels(reflector).set(float(data[13])/US)
+    DL_OWD_DELTA.labels(reflector).set(float(data[14])/US)
+    DL_ADJ_DELAY_THR.labels(reflector).set(float(data[15])/US)
 
-    UL_OWD_BASELINE.set(float(data[16])/US)
-    UL_OWD.set(float(data[17])/US)
-    UL_OWD_DELTA_EWMA.set(float(data[18])/US)
-    UL_OWD_DELTA.set(float(data[19])/US)
-    UL_ADJ_DELAY_THR.set(float(data[20])/US)
+    UL_OWD_BASELINE.labels(reflector).set(float(data[16])/US)
+    UL_OWD.labels(reflector).set(float(data[17])/US)
+    UL_OWD_DELTA_EWMA.labels(reflector).set(float(data[18])/US)
+    UL_OWD_DELTA.labels(reflector).set(float(data[19])/US)
+    UL_ADJ_DELAY_THR.labels(reflector).set(float(data[20])/US)
 
-    SUM_DL_DELAYS.set(float(data[21])/US)
-    SUM_UL_DELAYS.set(float(data[22])/US)
+    SUM_DL_DELAYS.labels(reflector).set(float(data[21])/US)
+    SUM_UL_DELAYS.labels(reflector).set(float(data[22])/US)
 
     DL_LOAD_CONDITION.state(data[23].replace(' ', ''))
     UL_LOAD_CONDITION.state(data[24].replace(' ', ''))
@@ -113,7 +114,7 @@ if __name__ == '__main__':
 
     start_http_server(EXPORTER_PORT)
 
-    logging.info('Log file {}, metrics at: http://localhost:9101/metrics'.format(LOG_FILE))
+    logging.info('Log file {}, metrics at: http://localhost:{}/metrics'.format(LOG_FILE, EXPORTER_PORT))
 
     while True:
         lastLines = tail(LOG_FILE, 5)
