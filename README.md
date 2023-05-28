@@ -175,13 +175,14 @@ cake_autorate_cake_ul_rate_bits_per_second 4e+06
 
 ```bash
 wget -P /etc/init.d/ https://raw.githubusercontent.com/bairhys/prometheus-cake-autorate-exporter/main/prometheus-node-exporter-cake-autorate
+chmod +x /etc/init.d/prometheus-node-exporter-cake-autorate
 ```
 
 6. Enable and start service
 
 ```bash
-service enable prometheus-node-exporter-cake-autorate
-service start prometheus-node-exporter-cake-autorate
+service prometheus-node-exporter-cake-autorate enable
+service prometheus-node-exporter-cake-autorate start
 ```
 
 7. Test to determine if metrics accessible as a service. In a browser, try accessing [http://192.168.1.1:9101/](http://192.168.1.1:9101/), should see raw metrics again like above
