@@ -14,7 +14,9 @@ LOG_TIMESTAMP = Gauge('cake_autorate_log_timestamp_seconds', 'Log timestamp (sec
 PROC_TIME = Gauge('cake_autorate_proc_timestamp_seconds', 'Process time (seconds)')  # [3]
 
 DL_ACHIEVED_RATE = Gauge('cake_autorate_dl_achieved_rate_bits_per_second', 'Measured download rate (bits/second)') # [4]
+DL_ACHIEVED_RATE_EWMA = Gauge('cake_autorate_dl_achieved_rate_ewma_bits_per_second', 'Measured download rate ewma (bits/second)') # [4]
 UL_ACHIEVED_RATE = Gauge('cake_autorate_ul_achieved_rate_bits_per_second', 'Measured upload rate (bits/second)') # [5]
+UL_ACHIEVED_RATE_EWMA = Gauge('cake_autorate_ul_achieved_rate_ewma_bits_per_second', 'Measured upload rate ewma (bits/second)') # [5]
 DL_LOAD_PERCENT = Gauge('cake_autorate_dl_load_percent', 'Download load (percent)') # [6]
 UL_LOAD_PERCENT = Gauge('cake_autorate_ul_load_percent', 'Upload load (percent)') # [7]
 
@@ -48,39 +50,41 @@ US = 1000000.0 # number of microseconds in a second
 
 
 def readLineData(data):
-    reflector = data[9].replace(' ', '')
+    reflector = data[11].replace(' ', '')
     DATA_HEADER.state(data[0].replace(' ', ''))
     # LOG_DATETIME.info({'version': '1.2.3', 'buildhost': 'foo@bar'})
     LOG_TIMESTAMP.set(data[2])
     PROC_TIME.set(data[3])
     DL_ACHIEVED_RATE.set(float(data[4])*KBPS) # to 
-    UL_ACHIEVED_RATE.set(float(data[5])*KBPS)
-    DL_LOAD_PERCENT.set(data[6])
-    UL_LOAD_PERCENT.set(data[7])
-    RTT_TIMESTAMP.set(data[8])
+    DL_ACHIEVED_RATE_EWMA.set(float(data[5])*KBPS)
+    UL_ACHIEVED_RATE.set(float(data[6])*KBPS)
+    UL_ACHIEVED_RATE_EWMA.set(float(data[7])*KBPS)
+    DL_LOAD_PERCENT.set(data[8])
+    UL_LOAD_PERCENT.set(data[9])
+    RTT_TIMESTAMP.set(data[10])
     REFLECTOR.labels(reflector).info({'address': reflector})
-    SEQUENCE.labels(reflector).set(data[10])
+    SEQUENCE.labels(reflector).set(data[12])
 
-    DL_OWD_BASELINE.labels(reflector).set(float(data[11])/US)
-    DL_OWD.labels(reflector).set(float(data[12])/US)
-    DL_OWD_DELTA_EWMA.labels(reflector).set(float(data[13])/US)
-    DL_OWD_DELTA.labels(reflector).set(float(data[14])/US)
-    DL_ADJ_DELAY_THR.labels(reflector).set(float(data[15])/US)
+    DL_OWD_BASELINE.labels(reflector).set(float(data[13])/US)
+    DL_OWD.labels(reflector).set(float(data[14])/US)
+    DL_OWD_DELTA_EWMA.labels(reflector).set(float(data[15])/US)
+    DL_OWD_DELTA.labels(reflector).set(float(data[16])/US)
+    DL_ADJ_DELAY_THR.labels(reflector).set(float(data[17])/US)
 
-    UL_OWD_BASELINE.labels(reflector).set(float(data[16])/US)
-    UL_OWD.labels(reflector).set(float(data[17])/US)
-    UL_OWD_DELTA_EWMA.labels(reflector).set(float(data[18])/US)
-    UL_OWD_DELTA.labels(reflector).set(float(data[19])/US)
-    UL_ADJ_DELAY_THR.labels(reflector).set(float(data[20])/US)
+    UL_OWD_BASELINE.labels(reflector).set(float(data[18])/US)
+    UL_OWD.labels(reflector).set(float(data[19])/US)
+    UL_OWD_DELTA_EWMA.labels(reflector).set(float(data[20])/US)
+    UL_OWD_DELTA.labels(reflector).set(float(data[21])/US)
+    UL_ADJ_DELAY_THR.labels(reflector).set(float(data[22])/US)
 
-    SUM_DL_DELAYS.labels(reflector).set(float(data[21])/US)
-    SUM_UL_DELAYS.labels(reflector).set(float(data[22])/US)
+    SUM_DL_DELAYS.labels(reflector).set(float(data[23])/US)
+    SUM_UL_DELAYS.labels(reflector).set(float(data[24])/US)
 
-    DL_LOAD_CONDITION.state(data[23].replace(' ', ''))
-    UL_LOAD_CONDITION.state(data[24].replace(' ', ''))
+    DL_LOAD_CONDITION.state(data[25].replace(' ', ''))
+    UL_LOAD_CONDITION.state(data[26].replace(' ', ''))
 
-    CAKE_DL_RATE.set(float(data[25])*KBPS)
-    CAKE_UL_RATE.set(float(data[26])*KBPS)
+    CAKE_DL_RATE.set(float(data[27])*KBPS)
+    CAKE_UL_RATE.set(float(data[28])*KBPS)
 
 
 def readLineLoad(data):
