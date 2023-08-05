@@ -34,13 +34,13 @@ UL_OWD_DELTA_EWMA = Gauge('cake_autorate_ul_owd_delta_ewma_seconds', '(seconds)'
 UL_OWD_DELTA = Gauge('cake_autorate_ul_owd_delta_seconds', '(seconds)', ['reflector']) # [19]
 UL_ADJ_DELAY_THR = Gauge('cake_autorate_ul_adj_delay_thr_seconds', '(seconds)', ['reflector']) # [20]
 
-DL_SUM_DELAYS = Gauge('cake_autorate_dl_sum_delays_seconds', 'Total download delays (seconds)', ['reflector']) # [21]
-DL_AVG_OWD_DELTA = Gauge('cake_autorate_dl_avg_owd_delta_seconds', 'Total download average owd delta (seconds)', ['reflector']) # [22]
-DL_ADJ_OWD_DELTA_THR = Gauge('cake_autorate_dl_adj_owd_delta_thr_seconds', 'Total adj owd delta thr (seconds)', ['reflector']) # [23]
+DL_SUM_DELAYS = Gauge('cake_autorate_dl_sum_delays_seconds', 'Total download delays (seconds)') # [21]
+DL_AVG_OWD_DELTA = Gauge('cake_autorate_dl_avg_owd_delta_seconds', 'Total download average owd delta (seconds)') # [22]
+DL_ADJ_OWD_DELTA_THR = Gauge('cake_autorate_dl_adj_owd_delta_thr_seconds', 'Total adj owd delta thr (seconds)') # [23]
 
-UL_SUM_DELAYS = Gauge('cake_autorate_ul_sum_delays_seconds', 'Total upload delays (seconds)', ['reflector']) # [24]
-UL_AVG_OWD_DELTA = Gauge('cake_autorate_ul_avg_owd_delta_seconds', 'Total download average owd delta (seconds)', ['reflector']) # [25]
-UL_ADJ_OWD_DELTA_THR= Gauge('cake_autorate_ul_adj_owd_delta_thr_seconds', 'Total adj owd delta thr (seconds)', ['reflector']) # [26]
+UL_SUM_DELAYS = Gauge('cake_autorate_ul_sum_delays_seconds', 'Total upload delays (seconds)') # [24]
+UL_AVG_OWD_DELTA = Gauge('cake_autorate_ul_avg_owd_delta_seconds', 'Total download average owd delta (seconds)') # [25]
+UL_ADJ_OWD_DELTA_THR= Gauge('cake_autorate_ul_adj_owd_delta_thr_seconds', 'Total adj owd delta thr (seconds)') # [26]
 
 DL_LOAD_CONDITION = Enum('cake_autorate_dl_load_condition_enum', 'Download state', states=['dl_idle', 'dl_idle_bb',  'dl_low', 'dl_low_bb', 'dl_high', 'dl_high_bb']) # [27]
 UL_LOAD_CONDITION = Enum('cake_autorate_ul_load_condition_enum', 'Upload state', states=['ul_idle', 'ul_idle_bb',  'ul_low', 'ul_low_bb', 'ul_high', 'ul_high_bb']) # [28]
@@ -55,7 +55,6 @@ US = 1000000.0 # number of microseconds in a second
 def readLineData(data):
     reflector = data[9].replace(' ', '')
     DATA_HEADER.state(data[0].replace(' ', ''))
-    # LOG_DATETIME.info({'version': '1.2.3', 'buildhost': 'foo@bar'})
     LOG_TIMESTAMP.set(data[2])
     PROC_TIME.set(data[3])
     DL_ACHIEVED_RATE.set(float(data[4])*KBPS) # to 
@@ -78,13 +77,13 @@ def readLineData(data):
     UL_OWD_DELTA.labels(reflector).set(float(data[19])/US)
     UL_ADJ_DELAY_THR.labels(reflector).set(float(data[20])/US)
 
-    DL_SUM_DELAYS.labels(reflector).set(float(data[21])/US)
-    DL_AVG_OWD_DELTA.labels(reflector).set(float(data[22])/US)
-    DL_ADJ_OWD_DELTA_THR.labels(reflector).set(float(data[23])/US)
+    DL_SUM_DELAYS.set(float(data[21])/US)
+    DL_AVG_OWD_DELTA.set(float(data[22])/US)
+    DL_ADJ_OWD_DELTA_THR.set(float(data[23])/US)
 
-    UL_SUM_DELAYS.labels(reflector).set(float(data[24])/US)
-    UL_AVG_OWD_DELTA.labels(reflector).set(float(data[25])/US)
-    UL_ADJ_OWD_DELTA_THR.labels(reflector).set(float(data[26])/US)
+    UL_SUM_DELAYS.set(float(data[24])/US)
+    UL_AVG_OWD_DELTA.set(float(data[25])/US)
+    UL_ADJ_OWD_DELTA_THR.set(float(data[26])/US)
 
     DL_LOAD_CONDITION.state(data[27].replace(' ', ''))
     UL_LOAD_CONDITION.state(data[28].replace(' ', ''))
@@ -92,10 +91,30 @@ def readLineData(data):
     CAKE_DL_RATE.set(float(data[29])*KBPS)
     CAKE_UL_RATE.set(float(data[30])*KBPS)
 
+def readLineSummary(data):
+    reflector = data[9].replace(' ', '')
+    DATA_HEADER.state(data[0].replace(' ', ''))
+    LOG_TIMESTAMP.set(data[2])
+
+    DL_ACHIEVED_RATE.set(float(data[3])*KBPS) # to 
+    UL_ACHIEVED_RATE.set(float(data[4])*KBPS)
+
+    DL_SUM_DELAYS.set(float(data[5])/US)
+    UL_SUM_DELAYS.set(float(data[6])/US)
+
+    DL_ADJ_OWD_DELTA_THR.set(float(data[7])/US)
+    UL_AVG_OWD_DELTA.set(float(data[8])/US)
+
+    DL_LOAD_CONDITION.state(data[9].replace(' ', ''))
+    UL_LOAD_CONDITION.state(data[10].replace(' ', ''))
+
+    CAKE_DL_RATE.set(float(data[11])*KBPS)
+    CAKE_UL_RATE.set(float(data[12])*KBPS)
+
+
 
 def readLineLoad(data):
     DATA_HEADER.state(data[0].replace(' ', ''))
-    # LOG_DATETIME.info({'version': '1.2.3', 'buildhost': 'foo@bar'})
     LOG_TIMESTAMP.set(data[2])
     PROC_TIME.set(data[3])
     DL_ACHIEVED_RATE.set(float(data[4])*KBPS)
@@ -139,6 +158,9 @@ if __name__ == '__main__':
                 logging.debug(line)
                 readLineLoad(data)
             elif data[0] == "SHAPER":
+                logging.debug(line)
+                readLineShaper(data)
+            elif data[0] == "SUMMARY":
                 logging.debug(line)
                 readLineShaper(data)
         
