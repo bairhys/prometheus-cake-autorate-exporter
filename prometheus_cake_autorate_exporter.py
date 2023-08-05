@@ -36,11 +36,11 @@ UL_ADJ_DELAY_THR = Gauge('cake_autorate_ul_adj_delay_thr_seconds', '(seconds)', 
 
 DL_SUM_DELAYS = Gauge('cake_autorate_dl_sum_delays_seconds', 'Total download delays (seconds)') # [21]
 DL_AVG_OWD_DELTA = Gauge('cake_autorate_dl_avg_owd_delta_seconds', 'Total download average owd delta (seconds)') # [22]
-DL_ADJ_OWD_DELTA_THR = Gauge('cake_autorate_dl_adj_owd_delta_thr_seconds', 'Total adj owd delta thr (seconds)') # [23]
+DL_ADJ_OWD_DELTA_THR = Gauge('cake_autorate_dl_adj_owd_delta_thr_seconds', 'Total download adj owd delta thr (seconds)') # [23]
 
 UL_SUM_DELAYS = Gauge('cake_autorate_ul_sum_delays_seconds', 'Total upload delays (seconds)') # [24]
-UL_AVG_OWD_DELTA = Gauge('cake_autorate_ul_avg_owd_delta_seconds', 'Total download average owd delta (seconds)') # [25]
-UL_ADJ_OWD_DELTA_THR= Gauge('cake_autorate_ul_adj_owd_delta_thr_seconds', 'Total adj owd delta thr (seconds)') # [26]
+UL_AVG_OWD_DELTA = Gauge('cake_autorate_ul_avg_owd_delta_seconds', 'Total upload average owd delta (seconds)') # [25]
+UL_ADJ_OWD_DELTA_THR= Gauge('cake_autorate_ul_adj_owd_delta_thr_seconds', 'Total upload adj owd delta thr (seconds)') # [26]
 
 DL_LOAD_CONDITION = Enum('cake_autorate_dl_load_condition_enum', 'Download state', states=['dl_idle', 'dl_idle_bb',  'dl_low', 'dl_low_bb', 'dl_high', 'dl_high_bb']) # [27]
 UL_LOAD_CONDITION = Enum('cake_autorate_ul_load_condition_enum', 'Upload state', states=['ul_idle', 'ul_idle_bb',  'ul_low', 'ul_low_bb', 'ul_high', 'ul_high_bb']) # [28]
