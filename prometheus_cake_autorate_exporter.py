@@ -5,7 +5,7 @@ from prometheus_client.core import Gauge, Info, Enum
 from prometheus_client import start_http_server
 
 LOG_FILE = '/var/log/cake-autorate.primary.log'
-DEBUG = False
+DEBUG = True
 EXPORTER_PORT = 9101
 
 DATA_HEADER = Enum('cake_autorate_data_header_enum', 'Log Type', states=['DATA',  'LOAD', 'SHAPER', 'SUMMARY']) # [0]
@@ -36,23 +36,30 @@ UL_ADJ_DELAY_THR = Gauge('cake_autorate_ul_adj_delay_thr_seconds', '(seconds)', 
 
 DL_SUM_DELAYS = Gauge('cake_autorate_dl_sum_delays_seconds', 'Total download delays (seconds)') # [21]
 DL_AVG_OWD_DELTA = Gauge('cake_autorate_dl_avg_owd_delta_seconds', 'Total download average owd delta (seconds)') # [22]
-DL_ADJ_OWD_DELTA_THR = Gauge('cake_autorate_dl_adj_owd_delta_thr_seconds', 'Total download adj owd delta thr (seconds)') # [23]
+DL_ADJ_MAX_ADJUST_UP_THR = Gauge('cake_autorate_dl_adj_max_adjust_up_thr_seconds', 'Total download adj max adjust up thr (seconds)') # [23]
+DL_ADJ_MAX_ADJUST_DOWN_THR = Gauge('cake_autorate_dl_adj_max_adjust_down_thr_seconds', 'Total download adj max adjust down thr (seconds)') # [24]
 
-UL_SUM_DELAYS = Gauge('cake_autorate_ul_sum_delays_seconds', 'Total upload delays (seconds)') # [24]
-UL_AVG_OWD_DELTA = Gauge('cake_autorate_ul_avg_owd_delta_seconds', 'Total upload average owd delta (seconds)') # [25]
-UL_ADJ_OWD_DELTA_THR= Gauge('cake_autorate_ul_adj_owd_delta_thr_seconds', 'Total upload adj owd delta thr (seconds)') # [26]
+UL_SUM_DELAYS = Gauge('cake_autorate_ul_sum_delays_seconds', 'Total upload delays (seconds)') # [25]
+UL_AVG_OWD_DELTA = Gauge('cake_autorate_ul_avg_owd_delta_seconds', 'Total upload average owd delta (seconds)') # [26]
+UL_ADJ_MAX_ADJUST_UP_THR= Gauge('cake_autorate_ul_adj_max_adjust_up_thr_seconds', 'Total upload adj max adjust up thr (seconds)') # [27]
+UL_ADJ_MAX_ADJUST_DOWN_THR= Gauge('cake_autorate_ul_adj_max_adjust_down_thr_seconds', 'Total upload adj max adjust down thr (seconds)') # [28]
 
-DL_LOAD_CONDITION = Enum('cake_autorate_dl_load_condition_enum', 'Download state', states=['dl_idle', 'dl_idle_bb', 'dl_idle_sss',  'dl_low', 'dl_low_bb', 'dl_low_sss', 'dl_high', 'dl_high_bb', 'dl_high_sss']) # [27]
-UL_LOAD_CONDITION = Enum('cake_autorate_ul_load_condition_enum', 'Upload state', states=['ul_idle', 'ul_idle_bb', 'ul_idle_sss',  'ul_low', 'ul_low_bb', 'ul_low_sss', 'ul_high', 'ul_high_bb', 'ul_high_sss']) # [28]
+DL_LOAD_CONDITION = Enum('cake_autorate_dl_load_condition_enum', 'Download state', states=['dl_idle', 'dl_idle_bb', 'dl_idle_sss',  'dl_low', 'dl_low_bb', 'dl_low_sss', 'dl_high', 'dl_high_bb', 'dl_high_sss']) # [29]
+UL_LOAD_CONDITION = Enum('cake_autorate_ul_load_condition_enum', 'Upload state', states=['ul_idle', 'ul_idle_bb', 'ul_idle_sss',  'ul_low', 'ul_low_bb', 'ul_low_sss', 'ul_high', 'ul_high_bb', 'ul_high_sss']) # [30]
 
-CAKE_DL_RATE = Gauge('cake_autorate_cake_dl_rate_bits_per_second', 'CAKE download rate (bits/sec)') # [29]
-CAKE_UL_RATE = Gauge('cake_autorate_cake_ul_rate_bits_per_second', 'CAKE upload rate (bits/sec)') # [30]
+CAKE_DL_RATE = Gauge('cake_autorate_cake_dl_rate_bits_per_second', 'CAKE download rate (bits/sec)') # [31]
+CAKE_UL_RATE = Gauge('cake_autorate_cake_ul_rate_bits_per_second', 'CAKE upload rate (bits/sec)') # [32]
 
 KBPS = 1000.0 # number of bits in kilobit
 US = 1000000.0 # number of microseconds in a second
 
 
 def readLineData(data):
+    for i in range(0,len(data)):
+        print(i, data[i])
+    if len(data) < 32:
+        logging.info('DATA too short {}, {}'.format(len(data), data))
+        return
     reflector = data[9].replace(' ', '')
     DATA_HEADER.state(data[0].replace(' ', ''))
     LOG_TIMESTAMP.set(data[2])
@@ -79,17 +86,57 @@ def readLineData(data):
 
     DL_SUM_DELAYS.set(float(data[21])/US)
     DL_AVG_OWD_DELTA.set(float(data[22])/US)
-    DL_ADJ_OWD_DELTA_THR.set(float(data[23])/US)
+    DL_ADJ_MAX_ADJUST_UP_THR.set(float(data[23])/US)
+    DL_ADJ_MAX_ADJUST_DOWN_THR.set(float(data[24])/US)
 
-    UL_SUM_DELAYS.set(float(data[24])/US)
-    UL_AVG_OWD_DELTA.set(float(data[25])/US)
-    UL_ADJ_OWD_DELTA_THR.set(float(data[26])/US)
+    UL_SUM_DELAYS.set(float(data[25])/US)
+    UL_AVG_OWD_DELTA.set(float(data[26])/US)
+    UL_ADJ_MAX_ADJUST_UP_THR.set(float(data[27])/US)
+    UL_ADJ_MAX_ADJUST_DOWN_THR.set(float(data[28])/US)
 
-    DL_LOAD_CONDITION.state(data[27].replace(' ', ''))
-    UL_LOAD_CONDITION.state(data[28].replace(' ', ''))
+    DL_LOAD_CONDITION.state(data[29].replace(' ', ''))
+    UL_LOAD_CONDITION.state(data[30].replace(' ', ''))
 
-    CAKE_DL_RATE.set(float(data[29])*KBPS)
-    CAKE_UL_RATE.set(float(data[30])*KBPS)
+    CAKE_DL_RATE.set(float(data[31])*KBPS)
+    CAKE_UL_RATE.set(float(data[32])*KBPS)
+
+# "DATA_HEADER; 
+# LOG_DATETIME; 
+# LOG_TIMESTAMP; 2
+# PROC_TIME_US; 3
+# DL_ACHIEVED_RATE_KBPS; 4
+# UL_ACHIEVED_RATE_KBPS; 5
+# DL_LOAD_PERCENT; 6
+# UL_LOAD_PERCENT; 7
+# ICMP_TIMESTAMP; 8
+# REFLECTOR; 9
+# SEQUENCE; 10
+# DL_OWD_BASELINE; 11
+# DL_OWD_US; 12
+# DL_OWD_DELTA_EWMA_US; 13
+# DL_OWD_DELTA_US; 14
+# DL_ADJ_DELAY_THR; 15
+# UL_OWD_BASELINE; 16
+# UL_OWD_US; 17
+# UL_OWD_DELTA_EWMA_US; 18
+# UL_OWD_DELTA_US;  19
+# UL_ADJ_DELAY_THR; 20
+# DL_SUM_DELAYS; 21
+# DL_AVG_OWD_DELTA_US; 22
+
+
+# DL_ADJ_MAX_ADJUST_UP_THR_US; 23
+# DL_ADJ_MAX_ADJUST_DOWN_THR_US; 24
+
+# UL_SUM_DELAYS; 25
+
+# UL_AVG_OWD_DELTA_US; 26
+# UL_ADJ_MAX_ADJUST_UP_THR_US; 27
+# UL_ADJ_MAX_ADJUST_DOWN_THR_US; 28
+# DL_LOAD_CONDITION; 29
+# UL_LOAD_CONDITION; 30
+# CAKE_DL_RATE_KBPS; 31
+# CAKE_UL_RATE_KBPS" 32
 
 def readLineSummary(data):
     reflector = data[9].replace(' ', '')
@@ -102,7 +149,7 @@ def readLineSummary(data):
     DL_SUM_DELAYS.set(float(data[5])/US)
     UL_SUM_DELAYS.set(float(data[6])/US)
 
-    DL_ADJ_OWD_DELTA_THR.set(float(data[7])/US)
+    DL_AVG_OWD_DELTA.set(float(data[7])/US)
     UL_AVG_OWD_DELTA.set(float(data[8])/US)
 
     DL_LOAD_CONDITION.state(data[9].replace(' ', ''))
