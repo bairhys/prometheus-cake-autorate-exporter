@@ -55,8 +55,8 @@ US = 1000000.0 # number of microseconds in a second
 
 
 def readLineData(data):
-    for i in range(0,len(data)):
-        print(i, data[i])
+    # for i in range(0,len(data)):
+    #     print(i, data[i])
     if len(data) < 32:
         logging.info('DATA too short {}, {}'.format(len(data), data))
         return
@@ -193,23 +193,25 @@ if __name__ == '__main__':
     logging.info('Log file {}, metrics at: http://localhost:{}/metrics'.format(LOG_FILE, EXPORTER_PORT))
 
     while True:
-        lastLines = tail(LOG_FILE, 5)
+        try:
+            lastLines = tail(LOG_FILE, 5)
 
-        for line in reversed(lastLines):
-            data = line.decode().split(';')
-            if data[0] == "DATA":
-                logging.debug(line)
-                readLineData(data)
-                break
-            elif data[0] == "LOAD":
-                logging.debug(line)
-                readLineLoad(data)
-            elif data[0] == "SHAPER":
-                logging.debug(line)
-                readLineShaper(data)
-            elif data[0] == "SUMMARY":
-                logging.debug(line)
-                readLineShaper(data)
-        
+            for line in reversed(lastLines):
+                data = line.decode().split(';')
+                if data[0] == "DATA":
+                    logging.debug(line)
+                    readLineData(data)
+                    break
+                elif data[0] == "LOAD":
+                    logging.debug(line)
+                    readLineLoad(data)
+                elif data[0] == "SHAPER":
+                    logging.debug(line)
+                    readLineShaper(data)
+                elif data[0] == "SUMMARY":
+                    logging.debug(line)
+                    readLineShaper(data)
+        except:
+            logging.debug("Error")
         time.sleep(1)
         
